@@ -1,7 +1,7 @@
 --5. 	O que está errado com a seguinte definição de todosDiferentes:
 --		todosDiferentes n m p = ( ( n/=m ) && ( m/=p ) )
 --		O conjunto de testes que você definiu na questão anterior funciona com
---		esta definição? 
+--		esta definição?
 
 todosDiferentes n m p = ( ( n/=m ) && ( m/=p ) )
 
@@ -15,7 +15,7 @@ todosDiferentes n m p = ( ( n/=m ) && ( m/=p ) )
 n1 :: Int
 n1 = 10
 
-n2 :: Int 
+n2 :: Int
 n2 = 20
 
 n3 :: Int

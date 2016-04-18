@@ -12,7 +12,7 @@ todosDiferentes a b c = (a /= b) && (b /= c)
 n1 :: Int
 n1 = 10
 
-n2 :: Int 
+n2 :: Int
 n2 = 20
 
 n3 :: Int
@@ -23,7 +23,3 @@ n4 = 20
 
 n5 :: Int
 n5 = 20
-
-
-
- 
