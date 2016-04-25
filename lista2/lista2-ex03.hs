@@ -1,0 +1,3 @@
+-- 3.   Defina uma função maxVenda que recebe um argumento numérico n, e
+--      calcule a semana, entre 0 e n, que teve o maior número de vendas.
+--      Essa função deve usar maiorVenda em sua definição.
