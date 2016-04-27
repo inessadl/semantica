@@ -1,3 +1,0 @@
---8.  O fatorial de um número positivo n é
---    1 * 2 * ... * (n-1) * n
---    Defina uma função fatorial em Haskell.

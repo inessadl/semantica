@@ -1,3 +1,0 @@
--- 4.   Defina uma função zeroVendas que recebe um argumento numérico n, e
---      que calcula qual das semanas entre 0 e n teve vendas igual a 0. Se
---      nenhuma semana teve vendas igual a 0 a função retorna -1.

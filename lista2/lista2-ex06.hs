@@ -1,1 +1,0 @@
--- 6.   Como você usaria a função anterior para definir a função zeroVendas.

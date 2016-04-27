@@ -1,3 +1,0 @@
--- 5.   Usando a definição anterior como guia, defina uma função que
---      receba um valor s e uma semana n, e devolva qual das semanas
---      entre 0 e n teve vendas iguais a s.
