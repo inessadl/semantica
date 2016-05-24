@@ -52,10 +52,12 @@ reflete :: Arvore -> Arvore
 reflete (Folha n) = (Folha n)
 reflete (No n a1 a2) = (No n (reflete a2) (reflete a1))
 
+
 --7. Defina uma fun ̧c ̃ao que transfore uma  ́arvore em uma lista
 arvToList :: Arvore -> [Int]
 arvToList (Folha n) = [n]
 arvToList (No n a1 a2) = n: arvToList a1 ++ arvToList a2 
+
 
 --8. Defina a fun ̧c ̃ao mapTree que aplica uma fun ̧c ̃ao a todos os inteiros de todos
 --os n ́os de uma  ́arvore.
@@ -65,14 +67,17 @@ mapTree :: (Int -> Int) -> Arvore -> Arvore
 mapTree f (Folha n) = Folha (f n)
 mapTree f (No n a1 a2) = (No (f n) (mapTree f a1) (mapTree f a2))
 
+
 --9. Defina uma lista como sendo um tipo alg ́ebrico recursivo. Defina as fun ̧c ̃oes
 --tamanho (que conta o n ́umero de elementos de uma lista) e a fun ̧c ̃ao map
 --que operem no tipo lista definido.
 data List = Nodo Int Int | NULL 
 	deriving (Eq, Show)
 
---tamanho :: List -> Int
---tamanho NULL = 0
---tamanho 
+tamanho :: List -> Int
+tamanho NULL = 0
+tamanho (Nodo _ l) = 1 + tamanho l
 
---map :: (Int -> Int) -> List -> List
+map :: (Int -> Int) -> List -> List
+map f NULL = NULL 
+map f (Nodo chablau l) = Nodo (f chablau) (map f l)

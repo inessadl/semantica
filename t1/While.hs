@@ -56,15 +56,17 @@ bbigStep (Or e1 e2, s) = let (b1, s1) = bbigStep (e1, s)
 
 
 cbigStep :: (CExp,Estado) -> (CExp,Estado)
-cbigStep (Skip,s)      	= (Skip,s)
+cbigStep (Skip,s) = (Skip,s)
 cbigStep (While b c, s) = let (b1,s1) = bbigStep (b,s)
-				in case b1 of
-					True -> let 	(_,s2) = cbigStep (c,s)
-							(_,s3) = cbigStep (While b c,s2)
-							in (Skip,s3)
-					False -> (Skip,s)
+							in case b1 of
+								True -> let (_,s2) = cbigStep (c,s)
+										(_,s3) = cbigStep (While b c,s2)
+										in (Skip,s3)
+								False -> (Skip,s)
 --cbigStep (If b c1 c2,s) = 
---cbigStep (Seq c1 c2,s)  = 
+cbigStep (Seq c1 c2,s)  = let (_, s1) = cbigStep (c1, s)
+							  (_, s2) = cbigStep (c2, s1)
+							  in (Skip, s2)
 --cbigStep (Atrib (Var x) e,s) = 
 
 
