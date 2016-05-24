@@ -51,3 +51,22 @@ unico l = faux l l
 -- percorrer toda a lista para saber se o elemento está presente na lista.
 -- Implemente uma nova definição de membro, que use iSort
 
+ordena :: [Int] -> [Int] -> [Int]
+ordena [] (h:t) = ordena [h] t 	-- separa o head do tail
+ordena l [] = l 				-- ordenada
+ordena (h:t) (x:xs) | x <= h = ordena (x:h:t) xs
+					| otherwise = ordena (h: ordena t [x]) xs
+
+iSort :: [Int] -> [Int]
+iSort l = ordena [] l 
+
+-- Alternativa:
+
+insert :: Int -> [Int] -> [Int]
+insert n [] = [n]
+insert n (h:t) | h <= n = h: insert n t
+			   | otherwise = n:h:t
+
+iSort' :: [Int] -> [Int]
+iSort' [] = []
+iSort' (h:t) = insert h (iSort' t) 

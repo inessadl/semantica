@@ -1,11 +1,18 @@
+--------------------------------------------------------
+----   Semântica Formal - Lista de Exercícios 2     ---- 
+----   Inessa Diniz Luerce                          ----
+--------------------------------------------------------
 
+
+-- 1. Defina uma função  max :: Int -> Int -> Int  que
 -- retorna o maior entre dois valores
 maximo :: Int -> Int -> Int
 maximo a b
   | a <= b = b
   | otherwise = a
 
--- retorna o valor associado às vendas das semanas
+-- 2. Usando a função max, defina uma função maiorVenda que recebe um 
+-- argumento numérico n e calcula a maior venda em uma semana entre 0 e n.
 vendas :: Int -> Int
 vendas 0 = 10
 vendas 1 = 0

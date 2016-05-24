@@ -19,13 +19,13 @@ quantosSaoIguais a b c d  | (a /= b) && (b /= c) && (c /= d) && (a /= c) && (a /
                           | (a == b) && (b /= c) && (c /= d) && (a /= d) = 2
                           | (a == c) && (b /= c) && (c /= d) && (a /= b) = 2
                           | (a == d) && (a /= b) && (a /= c) && (c /= d) = 2
-        		  | (b == c) && (a /= b) && (c /= d) && (a /= d) = 2
+        		              | (b == c) && (a /= b) && (c /= d) && (a /= d) = 2
                           | (c == d) && (a /= b) && (b /= c) && (a /= d) = 2
                           | (a == b) && (b == c) && (c /= d) = 3
                           | (a /= b) && (b == c) && (c == d) = 3
-        		  | (a == b) && (a == d) && (a /= c) = 3
-        		  | (a == c) && (c == d) && (a /= b) = 3
-        		  | otherwise = 4
+        		              | (a == b) && (a == d) && (a /= c) = 3
+        		              | (a == c) && (c == d) && (a /= b) = 3
+        		              | otherwise = 4
 
 
 -- 3. Defina a função  todosDiferentes :: Int -> Int -> Int -> Bool
