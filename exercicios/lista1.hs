@@ -38,24 +38,17 @@ todosDiferentes a b c | (a /= b) && (a /= c) && (b /= c) = True
 
 -- 4. Defina um conjunto de testes para a função todosDiferentes
 --
--- > todosDiferentes n1 n2 n3 	10 20 30    True
--- > todosDiferentes n1 n2 n4 	10 20 20    False
--- > todosDiferentes n2 n4 n5 	20 20 20    False
+--    todosDiferentes 0 1 2
+--    > True
 
-n1 :: Int
-n1 = 10
+--    todosDiferentes 0 1 1
+--    > False
 
-n2 :: Int
-n2 = 20
+--    todosDiferentes 1 0 1
+--    > False
 
-n3 :: Int
-n3 = 30
-
-n4 :: Int
-n4 = 20
-
-n5 :: Int
-n5 = 20
+--    todosDiferentes 1 1 1
+--    > False
 
 
 -- 5. O que está errado com a seguinte definição de todosDiferentes:
@@ -67,9 +60,17 @@ n5 = 20
 
 -- Casos de testes:
 --
--- todosDiferentes n1 n2 n3 	10 20 30	True	ok
--- todosDiferentes n1 n2 n4 	10 20 20	False	ok
--- todosDiferentes n2 n4 n5 	20 20 20 	False	ok
+--    todosDiferentes 0 1 2   OK
+--    > True
+
+--    todosDiferentes 0 1 1   OK
+--    > False
+
+--    todosDiferentes 1 0 1   OK
+--    > False
+
+--    todosDiferentes 1 1 1   OK
+--    > False
 
 
 -- 6. Defina a função:  todosIguais :: Int -> Int -> Int -> Bool
