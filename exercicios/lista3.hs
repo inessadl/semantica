@@ -1,5 +1,5 @@
 --------------------------------------------------------
-----   Semântica Formal - Lista de Exercícios 3     ---- 
+----   Semântica Formal - Lista de Exercícios 3     ----
 ----   Inessa Diniz Luerce                          ----
 --------------------------------------------------------
 
@@ -8,16 +8,16 @@
 -- que dobra o valor de todos os elementos de uma lista
 
 dobraLista :: [Int] -> [Int]
-dobraLista [] = error "_"
-dobraLista (a:x) = a * 2 : dobraLista x
+dobraLista [] = []
+dobraLista (h:t) = h * 2 : dobraLista t
 
 
 -- 2. Implemente a função  tamanho :: [Int] -> Int
 -- que conta o número de elementos de uma lista
 
 tamanho :: [Int] -> Int
-tamanho[] = 0
-tamanho(a:x) = 1 + tamanho x
+tamanho [] = 0
+tamanho(h:t) = 1 + tamanho t
 
 
 -- 3. Implemente a função  produtoLista :: [Int] -> Int
@@ -25,7 +25,8 @@ tamanho(a:x) = 1 + tamanho x
 
 produtoLista :: [Int] -> Int
 produtoLista [] = error "_"
-produtoLista (a:x) = a * produtoLista x
+produtoLista [n] = n
+produtoLista (h:t) = h * produtoLista t
 
 
 -- 4. Implemente a função  andLista :: [Bool] -> Bool
@@ -35,7 +36,7 @@ andLista :: [Bool] -> Bool
 andLista[] = error "_"
 andLista[False] = False
 andLista[True] = True
-andLista (a:x) = a && andLista x
+andLista (h:t) = h && andLista t
 
 
 -- 5. Implemente a função  concatLista :: [[Int]] ->[Int]
@@ -45,7 +46,7 @@ andLista (a:x) = a && andLista x
 
 concatLista :: [[Int]] -> [Int]
 concatLista[] = []
-concatLista (a:x) = a ++ concatLista x
+concatLista (h:t) = h ++ concatLista t
 
 
 -- 6. Implemente a função  inverteLista :: [Int] -> [Int]
@@ -54,5 +55,5 @@ concatLista (a:x) = a ++ concatLista x
 
 inverteLista :: [Int] -> [Int]
 inverteLista[] = []
-inverteLista[a] = [a]
-inverteLista(a:x) =  inverteLista x ++ [a]
+inverteLista[h] = [h]
+inverteLista(h:t) =  inverteLista t ++ [h]
