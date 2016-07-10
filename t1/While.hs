@@ -14,58 +14,58 @@ import Estado
 
 
 data AExp = Num Int
-        | Var String
-		| Som AExp AExp
-        | Sub AExp AExp
-		| Mul AExp AExp
+      | Var String
+      | Som AExp AExp
+      | Sub AExp AExp
+      | Mul AExp AExp
     deriving(Show)
 
-data BExp =	TRUE
-		| FALSE
-        | Not BExp
-		| And BExp BExp
-        | Or  BExp BExp
-		| Ig  AExp AExp
+data BExp = TRUE
+      | FALSE
+      | Not BExp
+      | And BExp BExp
+      | Or BExp BExp
+      | Ig AExp AExp
     deriving(Show)
 
 data CExp = While BExp CExp
-		| If BExp CExp CExp
-		| Seq CExp CExp
-		| Atrib AExp AExp
-        | Skip
-	deriving(Show)
+      | If BExp CExp CExp
+      | Seq CExp CExp
+      | Atrib AExp AExp
+      | Skip
+    deriving(Show)
 
 
 -- Expressões Aritméticas
 abigStep :: (AExp,Estado) -> (Int,Estado)
 abigStep (Var x,s) = (procuraVar s x,s)
 abigStep (Num n,s) = (n,s)
-abigStep (Som e1 e2,s)	=	let (n1,s1) = abigStep (e1, s);
-							  	(n2,s2) = abigStep (e2, s)
-							in  (n1+n2,s)
-abigStep (Sub e1 e2,s)  = 	let	(n1, s1) = abigStep (e1, s);
-			  					(n2, s2) = abigStep (e2, s)
+abigStep (Som e1 e2,s) = let (n1,s1) = abigStep (e1, s);
+							(n2,s2) = abigStep (e2, s)
+							in (n1+n2,s)
+abigStep (Sub e1 e2,s) = let (n1, s1) = abigStep (e1, s);
+							(n2, s2) = abigStep (e2, s)
 							in (n1-n2,s)
-abigStep (Mul e1 e2,s)  =	let	(n1, s1) = abigStep (e1, s);
-								(n2, s2) = abigStep (e2, s)
+abigStep (Mul e1 e2,s) = let (n1, s1) = abigStep (e1, s);
+							(n2, s2) = abigStep (e2, s)
 							in (n1*n2, s)
 
 
 -- Expressões Booleanas
 bbigStep :: (BExp,Estado) -> (Bool,Estado)
-bbigStep (TRUE,s)  	= (True,s)
-bbigStep (FALSE,s) 	= (False,s)
-bbigStep (Not b,s) 	=   let	(b1,s1) = bbigStep (b,s)
-						in (not b1,s1)
-bbigStep (Ig e1 e2, s)	= let (n1,s1) = abigStep(e1,s);
-			 				  (n2,s2) = abigStep (e2,s)
-						  in (n1 == n2, s)
+bbigStep (TRUE,s) = (True,s)
+bbigStep (FALSE,s) = (False,s)
+bbigStep (Not b,s) = let (b1,s1) = bbigStep (b,s)
+							in (not b1,s1)
+bbigStep (Ig e1 e2, s) = let (n1,s1) = abigStep(e1,s);
+							(n2,s2) = abigStep (e2,s)
+							in (n1 == n2, s)
 bbigStep (And e1 e2, s) = let (b1, s1) = bbigStep(e1,s);
-							  (b2, s2) = bbigStep(e2,s)
-						  in (b1 && b2, s)
+							(b2, s2) = bbigStep(e2,s)
+							in (b1 && b2, s)
 bbigStep (Or e1 e2, s) = let (b1, s1) = bbigStep(e1, s);
-							 (b2, s2) = bbigStep(e2, s)
-						 in (b1 || b2, s)
+							(b2, s2) = bbigStep(e2, s)
+							in (b1 || b2, s)
 
 
 -- Comandos
@@ -78,14 +78,14 @@ cbigStep (While b c, s) = let (b1,s1) = bbigStep (b,s)
 										in (Skip,s3)
 								False -> (Skip,s)
 cbigStep (If b c1 c2,s) = let (b1, s1) = bbigStep(b, s)
-                            in case b1 of
-                                True -> let (_,s2) = cbigStep(c1, s1);
-                                	in (Skip, s2)
-                                False -> let (_,s2) = cbigStep(c2, s2)
-                                	in (Skip, s2)
+							in case b1 of
+								True -> let (_,s2) = cbigStep(c1, s1);
+										in (Skip, s2)
+								False -> let (_,s2) = cbigStep(c2, s2)
+										in (Skip, s2)
 cbigStep (Seq c1 c2,s)  = let (_, s1) = cbigStep (c1, s);
-							  (_, s2) = cbigStep (c2, s1)
-							  in (Skip, s2)
+							(_, s2) = cbigStep (c2, s1)
+							in (Skip, s2)
 --cbigStep (Atrib (Var x) e,s) = let (e1,s1) = abigStep(e,s)
 
 
