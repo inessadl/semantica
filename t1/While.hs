@@ -140,6 +140,7 @@ estadoUnico' :: Estado
 estadoUnico' = [("x", 10)]
 
 
+
 -- Exemplos
 
 -- Soma
@@ -198,18 +199,18 @@ exLoop = Loop 5 exIncrementa2
 -- 							  in (Skip, s2)
 --exAnd' =
 
---teste1 :: BExp
---teste1 = (Ig (Som (Num 3) (Num 3))  (Mul (Num 2) (Num 3)))
---teste2 :: BExp
---teste2 = (Ig (Som (Var "x") (Num 3))  (Mul (Num 2) (Num 3)))
+teste1 :: BExp
+teste1 = (Ig (Som (Num 3) (Num 3))  (Mul (Num 2) (Num 3)))
+teste2 :: BExp
+teste2 = (Ig (Som (Var "x") (Num 3))  (Mul (Num 2) (Num 3)))
 
 
---testec1 :: CExp
---testec1 = (Seq (Seq (Atrib (Var "z") (Var "x")) (Atrib (Var "x") (Var "y")))
---		(Atrib (Var "y") (Var "z")))
+testec1 :: CExp
+testec1 = (Seq (Seq (Atrib (Var "z") (Var "x")) (Atrib (Var "x") (Var "y")))
+		(Atrib (Var "y") (Var "z")))
 
---fatorial :: CExp
---fatorial = (Seq (Atrib (Var "y") (Num 1))
---                (While (Not (Ig (Var "x") (Num 1)))
---                       (Seq (Atrib (Var "y") (Mul (Var "y") (Var "x")))
---                            (Atrib (Var "x") (Sub (Var "x") (Num 1))))))
+fatorial :: CExp
+fatorial = (Seq (Atrib (Var "y") (Num 1))
+               (While (Not (Ig (Var "x") (Num 1)))
+                      (Seq (Atrib (Var "y") (Mul (Var "y") (Var "x")))
+                           (Atrib (Var "x") (Sub (Var "x") (Num 1))))))
