@@ -32,6 +32,9 @@ data CExp = While BExp CExp
       | If BExp CExp CExp
       | Seq CExp CExp
       | Atrib AExp AExp
+      | Do CExp While BExp
+      | Repeat CExp Until BExp
+      | Loop CExp BExp
       | Skip
     deriving(Show)
 
@@ -77,6 +80,24 @@ cbigStep (While b c, s) = let (b1,s1) = bbigStep (b,s)
 										(_,s3) = cbigStep (While b c,s2)
 										in (Skip,s3)
 								False -> (Skip,s)
+cbigStep(Do c While b, s) = let (_, s1) = cbigStep(c, s);
+							(b, s2) = bbigStep(b, s1)
+							in case b of
+								True -> let (c, s2) = cbigStep(Do c While b, s1)
+										in (Skip, s2)
+								False -> cbigStep(Skip, s1)
+cbigStep(Repeat c Until b) = let (_,s1) = cbigStep(c,s);
+							(b, s2) = bbigStep(b, s1)
+							in case b of
+								True -> cbigStep(Skip, s1)
+								False -> let (c, s2) = cbigStep(Repeat c Until b, s1)
+										in (Skip, s2)
+cbigStep(Loop e c) = let (_,s1) = cbigStep(e, s);
+							(c, s2) = bbigStep(c, s1)
+							in case c of
+								True -> let (e, s2) = cbigStep(Loop e c, s1)
+										in (Skip, s2)
+								False -> cbigStep(Skip, s1)
 cbigStep (If b c1 c2,s) = let (b1, s1) = bbigStep(b, s)
 							in case b1 of
 								True -> let (_,s2) = cbigStep(c1, s1);
@@ -86,7 +107,10 @@ cbigStep (If b c1 c2,s) = let (b1, s1) = bbigStep(b, s)
 cbigStep (Seq c1 c2,s)  = let (_, s1) = cbigStep (c1, s);
 							(_, s2) = cbigStep (c2, s1)
 							in (Skip, s2)
---cbigStep (Atrib (Var x) e,s) = let (e1,s1) = abigStep(e,s)
+cbigStep (Atrib (Var x) e,s) = let (x,s1) = abigStep(e,s);
+							in (Skip, s1)
+-- cbigStep(x, y := e1, e2) =
+-- d) x, y := E1, E2
 
 
 
