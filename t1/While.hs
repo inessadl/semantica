@@ -47,7 +47,8 @@ data CExp = While BExp CExp
     deriving(Show)
 
 
--- Expressões Aritméticas
+-- ------------ EXPRESSÕES ARITMÉTICAS --------------- --
+
 abigStep :: (AExp,Estado) -> (Int,Estado)
 abigStep (Var x,s) = (procuraVar s x,s)
 abigStep (Num n,s) = (n,s)
@@ -62,7 +63,8 @@ abigStep (Mul e1 e2,s) = let (n1, s1) = abigStep (e1, s);
 							in (n1*n2, s)
 
 
--- Expressões Booleanas
+-- ------------ EXPRESSÕES BOOLEANAS --------------- --
+
 bbigStep :: (BExp,Estado) -> (Bool,Estado)
 bbigStep (TRUE,s) = (True,s)
 bbigStep (FALSE,s) = (False,s)
@@ -80,7 +82,10 @@ bbigStep (Or e1 e2, s) = let (b1, s1) = bbigStep(e1, s);
 bbigStep (Leq e1 e2, s) = let (n1,s1) = abigStep(e1,s);
 							(n2,s2) = abigStep(e2,s)
 							in (n1 <= n2, s)
--- Comandos
+
+
+-- ------------ COMANDOS --------------- --
+
 cbigStep :: (CExp,Estado) -> (CExp,Estado)
 cbigStep (Skip,s) = (Skip,s)
 cbigStep (While b c, s) = let (b1,s1) = bbigStep (b,s)
@@ -116,8 +121,8 @@ cbigStep(DuplaAtrib x y e1 e2, s) = cbigStep(Seq (Atrib x e1)(Atrib y e2), s)
 
 
 
--- Os exemplos a seguir são apenas formas mais compactas de testas as operações
--- é possível executar as mesmas operações explicitamente no terminal
+-- Os exemplos a seguir são apenas formas mais compactas de testar as 
+-- operações, é possível executá-las explicitamente no terminal
 --
 -- Exemplos de execução:
 --
@@ -186,6 +191,9 @@ exLeq = Leq (Var "x")(Num 10)
 exLoop :: CExp
 exLoop = Loop 5 exIncrementa2
 
+-- DoWhile
+exDoWhile :: CExp
+exDoWhile = DoWhile exIncrementa (Leq (Var "x")(Num 6))
 
 -- Exemplos para teste dados pelo professor:
 

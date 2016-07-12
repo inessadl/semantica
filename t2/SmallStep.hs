@@ -99,9 +99,9 @@ bSmallStep (Ig (Num x) e2, s) = let (ef, _) = aSmallStep (e2, s) in (Ig (Num x) 
 bSmallStep (Ig e1 e2, s) = let (ef, _) = aSmallStep (e1 ,s) in (Ig ef e2, s)
 
 
--- ---------------- EXPRESSÕES DE COMANDOS -------------------- --
+-- ---------------- COMANDOS -------------------- --
 
--- Verifica se continua interpretando a expressão de comandos
+-- Verifica se continua interpretando os comandos
 interpretC :: (CExp, Estado) -> (CExp, Estado)
 interpretC (c, s) = if isFinalC c then (c, s) else interpretC (cSmallStep (c, s))
 
@@ -110,7 +110,7 @@ isFinalC :: CExp -> Bool
 isFinalC Skip = True
 isFinalC x = False
 
--- Interpreta a expressão de comandos
+-- Interpreta os comandos
 cSmallStep :: (CExp,Estado) -> (CExp,Estado)
 -- If
 cSmallStep (If TRUE c1 c2, s) = (c1, s)
@@ -144,78 +144,87 @@ cSmallStep (Try c1 Catch c2, s) = let (cn, sn) = cSmallStep(c1, s) in (Try cn Ca
 -- ------- Exemplos de entradas e saídas: --------
 
 -- Expressões Aritméticas
+
+-- interpretA (exSoma1, meuEstado)
+-- > (Num 315,[("x",3),("y",0),("z",0)])
 --
+-- interpretA (exSub1, meuEstado)
+-- > (Num (-312),[("x",3),("y",0),("z",0)])
+-- 
+-- interpretA (exMul1, meuEstado)
+-- > (Num 20,[("x",3),("y",0),("z",0)])
+
 -- Soma
 exSoma1 :: AExp
-exSoma1 = Som (Num 3) (Num 4) -- > 7
+exSoma1 = Som (Num 313) (Num 2)
 exSoma2 :: AExp
-exSoma2 = Som (Num 3) (Som (Var "x") (Var "y")) -- > 6
+exSoma2 = Som (Num 10) (Som (Var "x") (Var "y"))
 exSoma3 :: AExp
-exSoma3 = Som (Som (Num 5) (Var "y")) (Som (Var "x") (Num 10)) -- > 18
+exSoma3 = Som (Som (Num 10) (Var "y")) (Som (Var "x") (Num 10))
 
 -- Subtração
 exSub1 :: AExp
-exSub1 = Sub (Num 3) exSoma1 -- > -4
+exSub1 = Sub (Num 3) exSoma1
 exSub2 :: AExp
-exSub2 = Sub (Num 10) (Som (Var "x") (Num 5)) -- > 2
+exSub2 = Sub (Num 10) (Som (Var "x") (Num 5))
 exSub3 :: AExp
-exSub3 = Sub (Sub (Num 5) (Var "y")) (Sub (Var "x") (Num 10)) -- > 12
+exSub3 = Sub (Sub (Num 5) (Var "y")) (Sub (Var "x") (Num 10))
 
 -- Multiplicação
 exMul1 :: AExp
-exMul1 = Mul (Num 4) (Num 5) -- > 20
+exMul1 = Mul (Num 4) (Num 5)
 exMul2 :: AExp
-exMul2 = Mul (Num 4) (Som (Var "x") (Num 5)) -- > 32
+exMul2 = Mul (Num 4) (Som (Var "x") (Num 5))
 exMul3 :: AExp
-exMul3 = Mul exSoma1 exSub1 -- Resposta -7
+exMul3 = Mul exSoma1 exSub1
 
--- interpretA (exSoma1, meuEstado)
--- >
--- interpretA (exSub1, meuEstado)
--- >
--- interpretA (exMul1, meuEstado)
--- >
+
 
 -- Expressões Booleanas
 --
--- >
--- >
--- >
-
--- Expressões de Comandos
+-- interpretB (exBool1, meuEstado)
+-- > (TRUE,[("x",3),("y",0),("z",0)])
 --
--- >
--- >
--- >
+-- interpretB (exBool2, meuEstado)
+-- > (FALSE,[("x",3),("y",0),("z",0)])
 
--- exBool1 :: BExp
--- exBool1 = And (And TRUE (Not FALSE)) (And (Not (Not TRUE)) TRUE) -- > True.
--- exBool2 :: BExp
--- exBool2 = Or (Not exBool1) (Or (Not TRUE) FALSE) -- > False.
+-- And
+exBool1 :: BExp
+exBool1 = And (And TRUE (Not FALSE)) (And (Not (Not TRUE)) TRUE) 
+
+-- Or
+exBool2 :: BExp
+exBool2 = Or (Not exBool1) (Or (Not TRUE) FALSE)
+
+
+
+-- Comandos
 --
--- -- ghci> interpretB (exBool1, meuEstado)
--- -- ghci> interpretB (exBool2, meuEstado)
---
--- exC1 :: CExp
--- exC1 = Atrib (Var "x") (Num 10)
--- exC2 :: CExp
--- exC2 = If FALSE exC1 (Atrib (Var "y") (Num 5))
--- exC3 :: CExp
--- exC3 = Try (Seq Throw exC1) Catch exC2
--- --cSmallStep (RepeatUntil Skip b, s) = (Skip, s)
--- --cSmallStep (RepeatUntil c b, s) = let (cn, sn) = cSmallStep(c, s) in (Seq c (If b Skip (RepeatUntil cn b)), s)
--- exC4 :: CExp
--- exC4 = RepeatUntil (error ("Teste\n")) (If (Ig (Num 3) (Var "x")) Skip (Atrib (Var "x") (Num 3)))
--- Para executar qualquer exemplo acima, executar:
--- ghci> interpretC (exemploC1, meuEstado)
--- ghci> interpretC (exemploC2, meuEstado)
+-- interpretC (exC1, meuEstado)
+-- > (Skip,[("x",313),("y",0),("z",0)])
+
+-- interpretC (exC2, meuEstado)
+-- > (Skip,[("x",3),("y",5),("z",0)])
 
 
+-- Atribuição
+exC1 :: CExp
+exC1 = Atrib (Var "x") (Num 313)
+
+-- If
+exC2 :: CExp
+exC2 = If FALSE exC1 (Atrib (Var "y") (Num 5))
+
+-- Try (x := 222)
+exC3 :: CExp
+exC3 = Try (Seq Throw exC1) Catch (Atrib (Var "x")(Num 222))
+
+-- Try (não entra no catch)
+exC4 :: CExp
+exC4 = Try (Seq Skip exC1) Catch (Atrib (Var "x")(Num 222))
 
 
-
-
--- Exemplos para teste dados pelo professor:
+-- Exemplos para teste fornecidos pelo professor:
 
 meuEstado :: Estado
 meuEstado = [("x",3), ("y",0), ("z",0)]
