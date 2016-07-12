@@ -92,7 +92,7 @@ cbigStep (If b c1 c2,s) = let (b1, s1) = bbigStep(b, s)
 cbigStep (Seq c1 c2,s)  = let (_, s1) = cbigStep (c1, s);
 							(_, s2) = cbigStep (c2, s1)
 							in (Skip, s2)
--- retorna skip com a memória modificada
+-- Atrib : retorna Skip com a memória modificada
 cbigStep (Atrib (Var x) e,s) = let (e1,s1) = abigStep(e,s);
 							in (Skip, mudaVar s x e1)
 cbigStep(DoWhile c b, s) = let (_, s1) = cbigStep(c, s);
@@ -100,8 +100,6 @@ cbigStep(DoWhile c b, s) = let (_, s1) = cbigStep(c, s);
 							in case b1 of
 								True -> let (e1, s3) = cbigStep(DoWhile c b, s1) in (e1, s3)
 								False -> cbigStep(Skip, s1)
--- cbigStep(Do c While b, s) = let (_, s1) = cbigStep(c, s);
--- 							(b1, s1) = bbigStep(b, s1) in if b1 then cbigStep(Do c While b, s1) else cbigStep(Skip, s1)
 cbigStep(RepeatUntil c b, s) = let (_,s1) = cbigStep(c,s);
 							(b1, s2) = bbigStep(b, s1)
 							in case b1 of
@@ -112,36 +110,25 @@ cbigStep(DuplaAtrib x y e1 e2, s) = cbigStep(Seq (Atrib x e1)(Atrib y e2), s)
 
 
 
-meuEstado :: Estado
-meuEstado = [("x",3), ("y",0), ("z",0)]
-
-exemplo :: AExp
-exemplo = Som (Num 3) (Som (Var "x") (Var "y"))
-
-
--- Estado 1
-est1 :: Estado
-est1 = [("x", 10), ("y", 15)]
-
--- Estado 2
-est2 :: Estado
-est2 = [("x", 25), ("y", 5)]
-
--- Estado 3
-est3 :: Estado
-est3 = [("x", 2), ("y", 3)]
-
-
+-- Os exemplos a seguir são apenas formas mais compactas de testas as operações
+-- é possível executar as mesmas operações diretamente no terminal
 --
-estadoUnico :: Estado
-estadoUnico = [("x", 4)]
-
-estadoUnico' :: Estado
-estadoUnico' = [("x", 10)]
+-- Exemplo de execução:
+-- 
 
 
+-- Estado com as variáveis "x" e "y"
+estadoXY :: Estado
+estadoXY = [("x", 10), ("y", 15)]
 
--- Exemplos
+
+-- Estados apenas com "x"
+estadoX :: Estado
+estadoX = [("x", 4)]
+
+estadoX' :: Estado
+estadoX' = [("x", 10)]
+
 
 -- Soma
 exSom :: AExp
@@ -167,7 +154,7 @@ exAtrib = Atrib (Var "x") (Num 15)
 exIncrementa :: CExp
 exIncrementa = Atrib (Var "x") (Som (Var "x")(Num 1))
 
--- Incrementa
+-- Incrementa2
 exIncrementa2 :: CExp
 exIncrementa2 = Atrib (Var "x") (Som (Var "x")(Num 2))
 
@@ -179,25 +166,15 @@ exLeq = Leq (Var "x")(Num 10)
 exLoop :: CExp
 exLoop = Loop 5 exIncrementa2
 
--- cbigStep(DoWhile exAtrib FALSE, estadoUnico)
 
--- do While
--- exDoWhile :: CExp
--- exDoWhile = Do (Atrib (Var "x") (Num 15)) While (False, s1)
---
--- exAnd' :: BExpcbigStep :: (CExp,Estado) -> (CExp,Estado)
--- cbigStep (Skip,s) = (Skip,s)
--- cbigStep (While b c, s) = let (b1,s1) = bbigStep (b,s)
--- 							in case b1 of
--- 								True -> let (_,s2) = cbigStep (c,s);
--- 										(_,s3) = cbigStep (While b c,s2)
--- 										in (Skip,s3)
--- 								False -> (Skip,s)
--- --cbigStep (If b c1 c2,s) =
--- cbigStep (Seq c1 c2,s)  = let (_, s1) = cbigStep (c1, s);
--- 							  (_, s2) = cbigStep (c2, s1)
--- 							  in (Skip, s2)
---exAnd' =
+-- Exemplos para teste dados pelo professor:
+
+meuEstado :: Estado
+meuEstado = [("x",3), ("y",0), ("z",0)]
+
+exemplo :: AExp
+exemplo = Som (Num 3) (Som (Var "x") (Var "y"))
+
 
 teste1 :: BExp
 teste1 = (Ig (Som (Num 3) (Num 3))  (Mul (Num 2) (Num 3)))
@@ -214,3 +191,5 @@ fatorial = (Seq (Atrib (Var "y") (Num 1))
                (While (Not (Ig (Var "x") (Num 1)))
                       (Seq (Atrib (Var "y") (Mul (Var "y") (Var "x")))
                            (Atrib (Var "x") (Sub (Var "x") (Num 1))))))
+
+
