@@ -1,4 +1,8 @@
+-- -------------------------------------------------------- --
 -- Semântica Formal (2016/01)
+--
+-- Nome: Inessa Luerce
+-- Matrícula: 11106289
 --
 -- Trabalho 1: finalizar a implementação do interpretador da
 -- Linguagem Imperativa (Big-Step) e adicionar os comandos:
@@ -8,7 +12,9 @@
 -- c) loop E C
 -- d) x, y := E1, E2
 --
+--
 -- Exemplo de execução: > abigStep(exemplo,meuEstado)
+-- -------------------------------------------------------- --
 
 import Estado
 
