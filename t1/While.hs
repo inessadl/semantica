@@ -111,10 +111,24 @@ cbigStep(DuplaAtrib x y e1 e2, s) = cbigStep(Seq (Atrib x e1)(Atrib y e2), s)
 
 
 -- Os exemplos a seguir são apenas formas mais compactas de testas as operações
--- é possível executar as mesmas operações diretamente no terminal
+-- é possível executar as mesmas operações explicitamente no terminal
 --
--- Exemplo de execução:
--- 
+-- Exemplos de execução:
+--
+-- cbigStep(fatorial, meuEstado)
+-- > (Skip,[("x",1),("y",6),("z",0)])
+--
+-- cbigStep(fatorial, estadoXY)
+-- > (Skip,[("x",1),("y",3628800)])
+--
+-- cbigStep(DuplaAtrib(Var "x")(Var "y") (Num 313) (Num 144), est1)
+-- > (Skip,[("x",313),("y",144)])
+--
+-- cbigStep(exLoop, [("x", 0)])
+-- > (Skip,[("x",10)])
+--
+-- cbigStep(exLoop, estadoXY)
+-- > (Skip,[("x",20),("y",15)])
 
 
 -- Estado com as variáveis "x" e "y"
@@ -191,5 +205,3 @@ fatorial = (Seq (Atrib (Var "y") (Num 1))
                (While (Not (Ig (Var "x") (Num 1)))
                       (Seq (Atrib (Var "y") (Mul (Var "y") (Var "x")))
                            (Atrib (Var "x") (Sub (Var "x") (Num 1))))))
-
-
